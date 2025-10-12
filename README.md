@@ -1,16 +1,16 @@
-# 🧠 Handwritten Digit Recognition using CNN
+# Handwritten Digit Recognition using CNN
 
 This project demonstrates handwritten digit recognition using Convolutional Neural Networks (CNN) on the MNIST dataset.
 
 ---
 
-## 📚 Dataset
+## Dataset
 
 The MNIST dataset consists of 60,000 training images and 10,000 testing images of handwritten digits (0-9). Each image is 28x28 pixels in grayscale.
 
 ---
 
-## 🧩 Model Architecture
+## Model Architecture
 
 - **Conv2D Layer**: 64 filters, kernel size (3,3), ReLU activation
 - **BatchNormalization Layer**
@@ -27,7 +27,7 @@ The MNIST dataset consists of 60,000 training images and 10,000 testing images o
 
 ---
 
-## ⚙️ Training Details
+## Training Details
 
 - **Optimizer**: Adam
 - **Loss Function**: Sparse Categorical Crossentropy
@@ -37,13 +37,13 @@ The MNIST dataset consists of 60,000 training images and 10,000 testing images o
 
 ---
 
-## 📈 Results
+## Results
 
 The model achieves ~98% accuracy on the MNIST test dataset.
 
 ---
 
-## ▶️ How to Run
+## How to Run
 
 ```bash
 pip install -r requirements.txt
