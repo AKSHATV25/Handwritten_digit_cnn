@@ -1,0 +1,62 @@
+import streamlit as st
+import numpy as np
+import tensorflow as tf
+from PIL import Image
+import cv2
+
+# Page config
+st.set_page_config(page_title="Handwritten Digit Recognition", layout="centered")
+st.title("🧠 Handwritten Digit Recognition")
+
+# Load the trained model
+@st.cache_resource
+def load_model():
+    return tf.keras.models.load_model("digit_model.h5")
+
+model = load_model()
+
+# File uploader
+uploaded_file = st.file_uploader("Upload a digit image (PNG, JPG, JPEG)", type=["png", "jpg", "jpeg"])
+
+if uploaded_file is not None:
+    # Open image and convert to grayscale
+    image = Image.open(uploaded_file).convert("L")
+    st.image(image, caption="Uploaded Image", use_column_width=True)
+
+    # Convert to numpy array
+    img_gray = np.array(image)
+
+    # Invert colors if background is white
+    if np.mean(img_gray) > 127:
+        img_gray = 255 - img_gray
+
+    # Resize while keeping aspect ratio to 20x20
+    h, w = img_gray.shape
+    if h > w:
+        new_h = 20
+        new_w = int(w * (20 / h))
+    else:
+        new_w = 20
+        new_h = int(h * (20 / w))
+    img_resized = cv2.resize(img_gray, (new_w, new_h))
+
+    # Add padding to center the digit in 28x28
+    pad_top = (28 - new_h) // 2
+    pad_bottom = 28 - new_h - pad_top
+    pad_left = (28 - new_w) // 2
+    pad_right = 28 - new_w - pad_left
+    img_padded = np.pad(img_resized, ((pad_top, pad_bottom), (pad_left, pad_right)), "constant", constant_values=0)
+
+    # Normalize and reshape
+    img_normalized = img_padded / 255.0
+    img_input = img_normalized.reshape(1, 28, 28, 1)
+
+    # Predict
+    y_pred = model.predict(img_input)
+    predicted_class = np.argmax(y_pred)
+    confidence = np.max(y_pred)
+
+    st.success(f"Prediction: {predicted_class} (Confidence: {confidence:.2f})")
+
+else:
+    st.info("Please upload an image of a handwritten digit to get started.")
