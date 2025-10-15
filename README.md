@@ -1,50 +1,52 @@
-Handwritten Digit Recognition using CNN
+# Handwritten Digit Recognition using CNN
 
-This project demonstrates handwritten digit recognition using Convolutional Neural Networks (CNN) on the MNIST dataset. The app is built with Streamlit so you can interactively draw or upload digits for prediction.
+This project demonstrates **handwritten digit recognition** using Convolutional Neural Networks (CNN) on the MNIST dataset. The app is built with **Streamlit** so you can interactively draw or upload digits for prediction.
 
-Dataset
+---
 
+## Dataset
 The MNIST dataset consists of:
+- **60,000 training images** and **10,000 testing images** of handwritten digits (0–9).  
+- Each image is **28x28 pixels**, grayscale.
 
-60,000 training images and 10,000 testing images of handwritten digits (0–9).
+---
 
-Each image is 28x28 pixels, grayscale.
+## Model Architecture
 
-Model Architecture
-Layer Type	Details
-Conv2D	64 filters, kernel size (3,3), ReLU activation
-BatchNormalization	-
-MaxPooling2D	Pool size (2,2)
-Conv2D	64 filters, kernel size (3,3), ReLU activation
-BatchNormalization	-
-MaxPooling2D	Pool size (2,2)
-Flatten	-
-Dense	128 units, ReLU activation
-Dropout	Rate 0.2
-Dense	64 units, ReLU activation
-Dropout	Rate 0.2
-Dense	10 units, Softmax activation
-Training Details
+| Layer Type | Details |
+|------------|---------|
+| Conv2D | 64 filters, kernel size (3,3), ReLU activation |
+| BatchNormalization | - |
+| MaxPooling2D | Pool size (2,2) |
+| Conv2D | 64 filters, kernel size (3,3), ReLU activation |
+| BatchNormalization | - |
+| MaxPooling2D | Pool size (2,2) |
+| Flatten | - |
+| Dense | 128 units, ReLU activation |
+| Dropout | Rate 0.2 |
+| Dense | 64 units, ReLU activation |
+| Dropout | Rate 0.2 |
+| Dense | 10 units, Softmax activation |
 
-Optimizer: Adam
+---
 
-Loss Function: Sparse Categorical Crossentropy
+## Training Details
+- **Optimizer:** Adam  
+- **Loss Function:** Sparse Categorical Crossentropy  
+- **Metrics:** Accuracy  
+- **Epochs:** 10  
+- **Validation Split:** 20%  
 
-Metrics: Accuracy
+**Results:** ~98% accuracy on the MNIST test dataset.
 
-Epochs: 10
+---
 
-Validation Split: 20%
+## How to Run the Streamlit App
 
-Results: ~98% accuracy on the MNIST test dataset.
-
-How to Run the Streamlit App
-
-Clone the repository:
-
+1. **Clone the repository:**
+```bash
 git clone https://github.com/AKSHATV25/Handwritten_digit_cnn.git
 cd Handwritten_digit_cnn
-
 
 Set up a virtual environment:
 
