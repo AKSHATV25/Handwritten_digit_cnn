@@ -4,7 +4,7 @@ import tensorflow as tf
 from PIL import Image
 import cv2
 
-# Page config
+# Page configuration
 st.set_page_config(page_title="Handwritten Digit Recognition", layout="wide")
 st.title("Handwritten Digit Recognition")
 
