@@ -5,8 +5,8 @@ from PIL import Image
 import cv2
 
 # Page config
-st.set_page_config(page_title="Handwritten Digit Recognition", layout="centered")
-st.title("🧠 Handwritten Digit Recognition")
+st.set_page_config(page_title="Handwritten Digit Recognition", layout="wide")
+st.title("Handwritten Digit Recognition")
 
 # Load the trained model
 @st.cache_resource
@@ -15,13 +15,18 @@ def load_model():
 
 model = load_model()
 
+# Layout: two columns
+col1, col2 = st.columns([1, 1])
+
 # File uploader
-uploaded_file = st.file_uploader("Upload a digit image (PNG, JPG, JPEG)", type=["png", "jpg", "jpeg"])
+uploaded_file = col1.file_uploader("Upload a digit image (PNG, JPG, JPEG)", type=["png", "jpg", "jpeg"])
 
 if uploaded_file is not None:
     # Open image and convert to grayscale
     image = Image.open(uploaded_file).convert("L")
-    st.image(image, caption="Uploaded Image", use_column_width=True)
+    
+    # Display uploaded image
+    col1.image(image, caption="Uploaded Image", use_container_width=True)
 
     # Convert to numpy array
     img_gray = np.array(image)
@@ -52,11 +57,16 @@ if uploaded_file is not None:
     img_input = img_normalized.reshape(1, 28, 28, 1)
 
     # Predict
-    y_pred = model.predict(img_input)
-    predicted_class = np.argmax(y_pred)
-    confidence = np.max(y_pred)
+    y_pred = model.predict(img_input)[0]
 
-    st.success(f"Prediction: {predicted_class} (Confidence: {confidence:.2f})")
+    # Top prediction
+    top_idx = np.argmax(y_pred)
+    col2.markdown(f"### Predicted Digit: {top_idx} (Probability: {y_pred[top_idx]:.2f})")
+
+    # Hidden list of all predictions
+    with col2.expander("See all probabilities"):
+        for idx, prob in enumerate(y_pred):
+            st.write(f"Digit {idx}: {prob:.2f}")
 
 else:
     st.info("Please upload an image of a handwritten digit to get started.")
